@@ -1,0 +1,151 @@
+/**
+ * Layout - Grid, Flexbox, Pozicioniranje
+ */
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: var(--spacing-md) 0;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: var(--font-4xl);
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.role-selector {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.2);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(10px);
+}
+
+.role-selector label {
+    font-weight: 600;
+    margin: 0;
+}
+
+.role-selector select {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    border-radius: var(--radius-sm);
+    background-color: white;
+    color: var(--dark-text);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.role-selector select:hover {
+    box-shadow: var(--shadow-sm);
+}
+
+/* Main Content */
+.main-content {
+    min-height: calc(100vh - 140px);
+    padding: var(--spacing-3xl) 0;
+}
+
+.view {
+    display: none;
+    animation: fadeIn var(--transition-fast);
+}
+
+.view.active {
+    display: block;
+}
+
+/* User Section */
+.user-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+.user-section > div {
+    background: white;
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    height: fit-content;
+}
+
+/* Admin Section */
+.admin-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2xl);
+}
+
+.admin-section > div {
+    background: white;
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+
+/* Feed */
+.posts-feed {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: var(--spacing-md);
+}
+
+.posts-feed::-webkit-scrollbar {
+    width: 8px;
+}
+
+.posts-feed::-webkit-scrollbar-track {
+    background: var(--light-bg);
+    border-radius: 10px;
+}
+
+.posts-feed::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+.posts-feed::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* Trending Grid - Leaderboard Style */
+.trending-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+/* Footer */
+.footer {
+    background: var(--secondary-color);
+    color: white;
+    text-align: center;
+    padding: var(--spacing-2xl);
+    margin-top: var(--spacing-4xl);
+}
+
+.footer p {
+    margin: 0;
+    font-size: var(--font-sm);
+    opacity: 0.8;
+}

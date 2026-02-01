@@ -1,0 +1,12 @@
+/**
+ * Glavna CSS datoteka
+ * Importuje sve module u ispravnom redosledu
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap');
+
+@import url('./variables.css');
+@import url('./layout.css');
+@import url('./components.css');
+@import url('./animations.css');
+@import url('./responsive.css');

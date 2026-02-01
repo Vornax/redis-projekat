@@ -1,0 +1,15 @@
+# .env fajl sa šiframa
+.env
+
+# Build
+bin/
+obj/
+
+# IDE
+.vs/
+.vscode/
+*.user
+
+# OS
+.DS_Store
+Thumbs.db

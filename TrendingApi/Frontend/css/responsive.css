@@ -1,0 +1,155 @@
+/**
+ * Responsive Design - Media Queries
+ */
+
+@media (max-width: 768px) {
+    /* Header */
+    .header .container {
+        flex-direction: column;
+        gap: var(--spacing-lg);
+    }
+
+    .logo {
+        font-size: var(--font-3xl);
+    }
+
+    .role-selector {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Main Content */
+    .main-content {
+        padding: var(--spacing-xl) 0;
+    }
+
+    /* User Section */
+    .user-section {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+    }
+
+    /* Containers */
+    .post-form-container,
+    .feed-container,
+    .dashboard-container {
+        padding: var(--spacing-xl);
+    }
+
+    /* Period Selector */
+    .period-selector {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .period-group select,
+    .period-group input {
+        min-width: unset;
+        width: 100%;
+    }
+
+    /* Trending List */
+    .trending-list {
+        grid-template-columns: 1fr;
+    }
+
+    /* Form Footer */
+    .form-footer {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .form-footer .btn {
+        width: 100%;
+    }
+
+    /* Post Feed */
+    .posts-feed {
+        max-height: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+
+    .logo {
+        font-size: var(--font-2xl);
+    }
+
+    .header {
+        padding: var(--spacing-sm) 0;
+    }
+
+    .role-selector {
+        padding: var(--spacing-sm) var(--spacing-md);
+        flex-direction: column;
+    }
+
+    .post-form-container,
+    .feed-container,
+    .dashboard-container {
+        padding: var(--spacing-lg);
+    }
+
+    .btn {
+        padding: var(--spacing-sm) var(--spacing-lg);
+        font-size: var(--font-xs);
+    }
+
+    .trending-item {
+        padding: var(--spacing-lg);
+    }
+
+    .post-item {
+        padding: var(--spacing-md);
+    }
+
+    .period-selector {
+        padding: var(--spacing-md);
+    }
+}
+
+/* Dark Mode (opciono) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --light-bg: #1a202c;
+        --light-text: #f7fafc;
+        --dark-text: #2d3748;
+        --border-color: #2d3748;
+    }
+
+    .post-item {
+        background: #2d3748;
+        border-left-color: #667eea;
+    }
+
+    .period-selector {
+        background: #2d3748;
+    }
+
+    textarea,
+    input,
+    select {
+        background: #2d3748;
+        color: #f7fafc;
+        border-color: #4a5568;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .header,
+    .footer,
+    .post-form-container,
+    .period-selector,
+    .btn {
+        display: none;
+    }
+
+    .post-item {
+        page-break-inside: avoid;
+        box-shadow: none;
+    }
+}

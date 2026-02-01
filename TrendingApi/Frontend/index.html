@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrendingAPI - Real-time Social Feed</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- Header sa Role Selection -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">TrendingAPI</h1>
+            <div class="role-selector">
+                <label for="roleSelect">Korisnik:</label>
+                <select id="roleSelect">
+                    <option value="">Učitavanje korisnika...</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="main-content">
+        <!-- USER VIEW -->
+        <div id="userView" class="view active">
+            <div class="container">
+                <div class="user-section">
+                    <!-- Post Creation Form -->
+                    <div class="post-form-container">
+                        <h2>Napišite svoju poruku</h2>
+                        <div class="username-input">
+                            <input type="text" id="username" placeholder="Unesite korisničko ime" maxlength="50">
+                        </div>
+                        <textarea id="postText" placeholder="Napišite poruku (koristi #hashtag za trendingy)" rows="4" maxlength="500"></textarea>
+                        <div class="form-footer">
+                            <button id="postBtn" class="btn btn-primary">Pošalji poruku</button>
+                            <button id="editBtn" class="btn btn-secondary" style="display: none;">Ažuriraj poslednju</button>
+                            <span id="rateLimit" class="rate-limit-msg"></span>
+                        </div>
+                        <div id="charCount" class="char-count">0/500</div>
+                    </div>
+
+                    <!-- Feed Section -->
+                    <div class="feed-container">
+                        <h2>Feed - Sve poruke</h2>
+                        <div id="postsFeed" class="posts-feed">
+                            <p class="loading">Učitavanje poruka...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADMIN VIEW -->
+        <div id="adminView" class="view">
+            <div class="container">
+                <div class="admin-section">
+                    <!-- Admin Dashboard -->
+                    <div class="dashboard-container">
+                        <h2>Admin Dashboard - Trending Topici</h2>
+                        
+                        <!-- Period Selector -->
+                        <div class="period-selector">
+                            <div class="period-group">
+                                <label for="periodType">Period:</label>
+                                <select id="periodType">
+                                    <option value="hours">Sati</option>
+                                    <option value="days">Dani</option>
+                                </select>
+                            </div>
+                            <div class="period-group">
+                                <label for="periodValue">Vrednost:</label>
+                                <input type="number" id="periodValue" min="1" max="30" value="24">
+                            </div>
+                            <button id="filterBtn" class="btn btn-primary">Primeni filter</button>
+                        </div>
+
+                        <!-- Trending Items List -->
+                        <div class="trending-list-container">
+                            <h3 id="trendingTitle">Trending topici (zadnjih 24 sata)</h3>
+                            <div id="trendingList" class="trending-list">
+                                <p class="loading">Učitavanje trending topika...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 TrendingAPI. Sve poruke se čuvaju u Redis-u.</p>
+    </footer>
+
+    <!-- Skripta sa ES6 modulima -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
