@@ -1,0 +1,31 @@
+
+HSET user:pera username "pera" role "user"
+HSET user:admin username "admin" role "admin"
+HSET user:ana username "ana" role "user"
+
+
+ZADD trending:2026-01-31 5 "#motivacioniquote"
+ZADD trending:2026-01-31 6 "#chillmode"
+ZADD trending:2026-01-31 7 "#projekat"
+ZADD trending:2026-01-31 8 "#jutarnjakafa"
+ZADD trending:2026-01-31 9 "#dotnetdev"
+ZADD trending:2026-01-31 10 "#dnevnitips"
+ZADD trending:2026-01-31 11 "#tipsandtricks"
+ZADD trending:2026-01-31 12 "#dockerlove"
+ZADD trending:2026-01-31 13 "#pozdravsvima"
+ZADD trending:2026-01-31 14 "#programiranjedanas"
+
+ZADD trending:2026-02-01 3 "#docker"
+ZADD trending:2026-02-01 5 "#chill"
+ZADD trending:2026-02-01 6 "#pozdrav"
+ZADD trending:2026-02-01 7 "#dobrodosli"
+ZADD trending:2026-02-01 8 "#kafa"
+ZADD trending:2026-02-01 9 "#motivacija"
+ZADD trending:2026-02-01 10 "#korakpokorak"
+ZADD trending:2026-02-01 11 "#programiranje"
+ZADD trending:2026-02-01 12 "#dnevnatema"
+ZADD trending:2026-02-01 15 "#dotnet"
+
+SET global:next_post_id 100
+LPUSH global_timeline "post:100" "post:99"
+

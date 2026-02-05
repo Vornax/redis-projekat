@@ -45,7 +45,6 @@
     transform: none;
 }
 
-/* Forms */
 .form-footer {
     display: flex;
     gap: var(--spacing-md);
@@ -86,14 +85,12 @@ textarea {
     min-height: 100px;
 }
 
-/* Character Count */
 .char-count {
     font-size: var(--font-sm);
     color: #718096;
     margin-top: var(--spacing-sm);
 }
 
-/* Rate Limit Message */
 .rate-limit-msg {
     font-size: var(--font-sm);
     font-weight: 600;
@@ -102,7 +99,6 @@ textarea {
     animation: shake 0.3s ease;
 }
 
-/* Post Item Card */
 .post-item {
     background: var(--light-bg);
     padding: var(--spacing-lg);
@@ -157,7 +153,6 @@ textarea {
     transform: scale(0.95);
 }
 
-/* Post footer - hashtags i actions */
 .post-footer {
     display: flex;
     justify-content: space-between;
@@ -172,7 +167,6 @@ textarea {
     margin-bottom: var(--spacing-sm);
 }
 
-/* Hashtags */
 .post-hashtags {
     display: flex;
     flex-wrap: wrap;
@@ -189,7 +183,6 @@ textarea {
     font-weight: 600;
 }
 
-/* Trending Item Card - Leaderboard */
 .trending-item {
     display: flex;
     align-items: center;
@@ -255,7 +248,6 @@ textarea {
     color: var(--primary-color);
 }
 
-/* Filter Controls */
 .period-selector {
     display: flex;
     gap: var(--spacing-xl);
@@ -298,7 +290,6 @@ textarea {
     border-color: var(--primary-color);
 }
 
-/* Loading State */
 .loading {
     text-align: center;
     color: #a0aec0;

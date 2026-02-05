@@ -6,6 +6,7 @@ import { ROUTES, CONFIG } from './config.js';
 
 // Slanje nove poruke
 export async function createPost(username, text) {
+
     const response = await fetch(ROUTES.POSTS_CREATE, {
         method: 'POST',
         headers: {
@@ -64,19 +65,6 @@ export async function getPosts(count = 20) {
         return await response.json();
     } catch (error) {
         console.error('Load posts error:', error);
-        throw error;
-    }
-}
-
-// Preuzimanje trending po satima
-export async function getTrendingCurrent(hours = 24, top = 20) {
-    try {
-        const response = await fetch(`${ROUTES.TRENDING_CURRENT}?top=${top}&hours=${hours}`);
-        if (!response.ok) throw new Error('Failed to load trending');
-
-        return await response.json();
-    } catch (error) {
-        console.error('Load trending error:', error);
         throw error;
     }
 }

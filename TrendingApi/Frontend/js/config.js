@@ -3,10 +3,10 @@
  */
 
 export const CONFIG = {
-    API_BASE: 'http://localhost:5039/api',
+    API_BASE: '/api',
     API_KEY: 'trending123',
     RATE_LIMIT_WINDOW: 60000, // 1 minut
-    MAX_POSTS_PER_MINUTE: 5,
+    MAX_POSTS_PER_MINUTE: 3,
     TRENDING_REFRESH_INTERVAL: 5000, // 5 sekundi
     SSE_RETRY_DELAY: 5000 // 5 sekundi
 };
@@ -15,7 +15,6 @@ export const ROUTES = {
     POSTS_CREATE: `${CONFIG.API_BASE}/posts`,
     POSTS_GET: `${CONFIG.API_BASE}/posts`,
     POSTS_EDIT: `${CONFIG.API_BASE}/posts/last`,
-    TRENDING_CURRENT: `${CONFIG.API_BASE}/trending/current`,
     TRENDING_PERIOD: `${CONFIG.API_BASE}/trending/period`,
     EVENTS: `${CONFIG.API_BASE}/events`,
     USERS_ALL: `${CONFIG.API_BASE}/users/all`

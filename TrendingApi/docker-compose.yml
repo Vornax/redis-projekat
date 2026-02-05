@@ -1,0 +1,57 @@
+version: '3.9'
+
+services:
+  redis:
+    image: redis:8.4
+    container_name: trending-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_volume_data:/data
+
+  redis-insight:
+    image: redis/redisinsight:2.58
+    container_name: redis-insight
+    restart: unless-stopped
+    ports:
+      - "5540:5540"           
+    volumes:
+      - redis_insight_volume_data:/data
+
+  redis-seed:
+    image: redis:8.4
+    container_name: redis-seed
+    depends_on:
+      - redis
+    volumes:
+      - ./redis-seed:/seed:ro
+    restart: "no"
+    command: >
+      sh -c "
+        echo 'Waiting for Redis...';
+        until redis-cli -h redis ping | grep -q PONG; do
+          sleep 1;
+        done;
+        echo 'Redis spreman → učitavam seed';
+        redis-cli -h redis < /seed/01-seed.redis || true;
+        echo 'Seed završen.';
+      "
+
+  backend:
+    build: . 
+    container_name: trending-net
+    restart: unless-stopped
+    ports:
+      - "5257:5257" 
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:5257
+    env_file:
+      - .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   
+
+volumes:
+  redis_volume_data:
+  redis_insight_volume_data:

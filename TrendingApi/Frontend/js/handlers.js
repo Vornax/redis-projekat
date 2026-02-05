@@ -8,7 +8,7 @@ import { startSSE, stopSSE } from './sse.js';
 import { createPost, updateLastPost, getAllUsers, deletePost } from './api.js';
 import { showNotification } from './utils.js';
 import { 
-    roleSelect, usernameInput, postText, postBtn, editBtn, filterBtn, periodType, periodValue
+    roleSelect, usernameInput, postText, postBtn, editBtn, filterBtn, periodValue, topValue
 } from './dom.js';
 import { MESSAGES, CONFIG } from './config.js';
 
@@ -23,11 +23,16 @@ export function initializeEventListeners() {
     postText.addEventListener('input', updateEditButtonVisibility);
     usernameInput.addEventListener('input', updateEditButtonVisibility);
     usernameInput.addEventListener('change', handleUsernameChange);
-    periodType.addEventListener('change', handlePeriodTypeChange);
     periodValue.addEventListener('input', validatePeriodValue); // Validacija unosa
+    topValue.addEventListener('input', validateTopValue); // Validacija unosa
     
-    // Postavi inicijalne max vrednosti za period value
-    periodValue.max = 24; 
+    // Admin uses days-only: default 3, max 30
+    periodValue.max = 30;
+    periodValue.value = 3;
+    
+    // Admin uses top results: default 10, max 50
+    topValue.max = 50;
+    topValue.value = 10;
     
     // Učitaj korisnike u select
     loadUsersIntoSelect();
@@ -119,16 +124,7 @@ function handleUsernameChange(e) {
     updateState({ username: e.target.value });
 }
 
-// Promena tipa perioda, ažurira defaultnu vrednost
-function handlePeriodTypeChange(e) {
-    if (e.target.value === 'hours') {
-        periodValue.value = 24;
-        periodValue.max = 24; // max 24 sata
-    } else {
-        periodValue.value = 7;
-        periodValue.max = 30;
-    }
-}
+
 
 // Validacija unosa vrednosti perioda - sprečava ručni unos preko limi
 function validatePeriodValue(e) {
@@ -143,6 +139,22 @@ function validatePeriodValue(e) {
     // Sprečava unos 0 ili negativnih vrednosti
     if (currentValue < 1) {
         periodValue.value = 1;
+    }
+}
+
+// Validacija unosa vrednosti top rezultata - sprečava ručni unos preko limi
+function validateTopValue(e) {
+    const maxValue = parseInt(topValue.max);
+    const currentValue = parseInt(e.target.value) || 0;
+    
+    // Ako je uneta vrednost veća od max-a, postavi je na max
+    if (currentValue > maxValue) {
+        topValue.value = maxValue;
+    }
+    
+    // Sprečava unos 0 ili negativnih vrednosti
+    if (currentValue < 1) {
+        topValue.value = 1;
     }
 }
 

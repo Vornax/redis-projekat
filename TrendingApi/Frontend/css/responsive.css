@@ -3,7 +3,6 @@
  */
 
 @media (max-width: 768px) {
-    /* Header */
     .header .container {
         flex-direction: column;
         gap: var(--spacing-lg);
@@ -18,25 +17,21 @@
         justify-content: center;
     }
 
-    /* Main Content */
     .main-content {
         padding: var(--spacing-xl) 0;
     }
 
-    /* User Section */
     .user-section {
         grid-template-columns: 1fr;
         gap: var(--spacing-xl);
     }
 
-    /* Containers */
     .post-form-container,
     .feed-container,
     .dashboard-container {
         padding: var(--spacing-xl);
     }
 
-    /* Period Selector */
     .period-selector {
         flex-direction: column;
         align-items: stretch;
@@ -48,12 +43,10 @@
         width: 100%;
     }
 
-    /* Trending List */
     .trending-list {
         grid-template-columns: 1fr;
     }
 
-    /* Form Footer */
     .form-footer {
         flex-direction: column;
         gap: var(--spacing-md);
@@ -63,7 +56,6 @@
         width: 100%;
     }
 
-    /* Post Feed */
     .posts-feed {
         max-height: none;
     }
@@ -111,7 +103,6 @@
     }
 }
 
-/* Dark Mode (opciono) */
 @media (prefers-color-scheme: dark) {
     :root {
         --light-bg: #1a202c;
@@ -138,7 +129,6 @@
     }
 }
 
-/* Print Styles */
 @media print {
     .header,
     .footer,

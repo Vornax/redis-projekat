@@ -20,9 +20,9 @@ export const rateLimitMsg = document.getElementById('rateLimit');
 // Feed
 export const postsFeed = document.getElementById('postsFeed');
 
-// Admin filter elements
-export const periodType = document.getElementById('periodType');
+// Admin filter elements (days and top)
 export const periodValue = document.getElementById('periodValue');
+export const topValue = document.getElementById('topValue');
 export const filterBtn = document.getElementById('filterBtn');
 
 // Trending display

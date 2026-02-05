@@ -11,11 +11,40 @@ namespace TrendingApi.Services
 
         public RedisService(IConfiguration configuration)
         {
-            var redisConnectionString = configuration.GetConnectionString("Redis")
-                ?? "localhost:6379";  
+            var redisConnectionString = configuration.GetConnectionString("Redis") ?? "redis:6379";
+            var redisPassword = configuration["REDIS_PASSWORD"];
 
-            _redis = ConnectionMultiplexer.Connect(redisConnectionString);
-            Database = _redis.GetDatabase();
+            var options = ConfigurationOptions.Parse(redisConnectionString);
+            if (!string.IsNullOrEmpty(redisPassword))
+            {
+                options.Password = redisPassword;
+            }
+            options.AbortOnConnectFail = false;
+
+            const int maxAttempts = 8;
+            var delay = TimeSpan.FromSeconds(1);
+            Exception lastEx = null!;
+            for (int attempt = 1; attempt <= maxAttempts; attempt++)
+            {
+                try
+                {
+                    _redis = ConnectionMultiplexer.Connect(options);
+                    Database = _redis.GetDatabase();
+                    lastEx = null!;
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    lastEx = ex;
+                    System.Threading.Thread.Sleep(delay);
+                    delay = TimeSpan.FromSeconds(Math.Min(10, delay.TotalSeconds * 2));
+                }
+            }
+
+            if (lastEx != null)
+            {
+                throw new InvalidOperationException($"Unable to connect to Redis at '{redisConnectionString}' after retries.", lastEx);
+            }
         }
 
         public void Dispose()
@@ -23,6 +52,5 @@ namespace TrendingApi.Services
             _redis?.Dispose();
         }
 
-        // Kasnije ćemo dodavati metode ovde: Publish, GetLastPost itd.
     }
 }

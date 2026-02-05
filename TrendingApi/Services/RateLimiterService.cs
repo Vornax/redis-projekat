@@ -5,7 +5,7 @@ namespace TrendingApi.Services
     public class RateLimiterService
     {
         private readonly IDatabase _db;
-        private const int MaxRequestsPerMinute = 5;
+        private const int MaxRequestsPerMinute = 3;
         private const int WindowSeconds = 60;
 
         public RateLimiterService(RedisService redisService)

@@ -55,7 +55,6 @@
     box-shadow: var(--shadow-sm);
 }
 
-/* Main Content */
 .main-content {
     min-height: calc(100vh - 140px);
     padding: var(--spacing-3xl) 0;
@@ -70,7 +69,6 @@
     display: block;
 }
 
-/* User Section */
 .user-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -86,7 +84,6 @@
     height: fit-content;
 }
 
-/* Admin Section */
 .admin-section {
     display: grid;
     grid-template-columns: 1fr;
@@ -100,7 +97,6 @@
     box-shadow: var(--shadow);
 }
 
-/* Feed */
 .posts-feed {
     display: flex;
     flex-direction: column;
@@ -128,14 +124,12 @@
     background: var(--secondary-color);
 }
 
-/* Trending Grid - Leaderboard Style */
 .trending-list {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
 }
 
-/* Footer */
 .footer {
     background: var(--secondary-color);
     color: white;

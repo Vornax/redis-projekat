@@ -4,13 +4,13 @@
 
 import {
     postText, charCount, postsFeed, trendingList, trendingTitle,
-    editBtn, rateLimitMsg, postBtn, periodType, periodValue
+    editBtn, rateLimitMsg, postBtn, periodValue, topValue
 } from './dom.js';
 import {
     MESSAGES, CONFIG
 } from './config.js';
 import {
-    getPosts, getTrendingCurrent, getTrendingPeriod
+    getPosts, getTrendingPeriod
 } from './api.js';
 import {
     extractHashtags, formatTime, escapeHtml, showNotification
@@ -84,19 +84,14 @@ function renderPosts(posts) {
 
 // Učitavanje trending topika - inicijalno (sa loading indikatorom)
 export async function loadTrending() {
-    const type = periodType.value;
-    const value = parseInt(periodValue.value) || 1;
+    const periodDays = parseInt(periodValue?.value) || 1;
+    const topResults = parseInt(topValue?.value) || 10;
 
-    trendingTitle.textContent = `Trending topici (zadnjih ${value} ${type === 'hours' ? 'sati' : 'dana'})`;
+    trendingTitle.textContent = `Trending topici (zadnjih ${periodDays} dana)`;
     trendingList.innerHTML = '<p class="loading">Učitavanje trending topika...</p>';
 
     try {
-        let trending;
-        if (type === 'hours') {
-            trending = await getTrendingCurrent(value, 20);
-        } else {
-            trending = await getTrendingPeriod(value, 20, state.username);
-        }
+        const trending = await getTrendingPeriod(periodDays, topResults, state.username);
         renderTrending(trending);
     } catch (error) {
         trendingList.innerHTML = `<p class="loading">${MESSAGES.ERROR_LOAD_TRENDING}</p>`;
@@ -106,15 +101,9 @@ export async function loadTrending() {
 // Osvežavanje trending topika - tiho (bez loading indika
 export async function refreshTrendingQuietly() {
     try {
-        const type = periodType.value;
-        const value = parseInt(periodValue.value) || 1;
-
-        let trending;
-        if (type === 'hours') {
-            trending = await getTrendingCurrent(value, 20);
-        } else {
-            trending = await getTrendingPeriod(value, 20, state.username);
-        }
+        const periodDays = parseInt(periodValue?.value) || 1;
+        const topResults = parseInt(topValue?.value) || 10;
+        const trending = await getTrendingPeriod(periodDays, topResults, state.username);
         
         // Samo ažurira podatke bez flashing-a
         renderTrendingQuietly(trending);
@@ -126,12 +115,15 @@ export async function refreshTrendingQuietly() {
 
 // Renderovanje trending topika
 function renderTrending(trendingItems) {
-    if (trendingItems.length === 0) {
+    // Filtrira stavke sa score < 1 (obrisane poruke koje su smanjile trending)
+    const filteredItems = trendingItems.filter(item => item.score >= 1);
+    
+    if (filteredItems.length === 0) {
         trendingList.innerHTML = `<p class="loading">${MESSAGES.NO_TRENDING}</p>`;
         return;
     }
 
-    trendingList.innerHTML = trendingItems.map((item, index) => `
+    trendingList.innerHTML = filteredItems.map((item, index) => `
         <div class="trending-item">
             <div class="trending-rank">#${index + 1}</div>
             <div class="trending-hashtag">${escapeHtml(item.hashtag)}</div>
@@ -145,7 +137,10 @@ function renderTrending(trendingItems) {
 
 // Tiho osvežavanje trending topika - ažurira samo ako se promenilo
 function renderTrendingQuietly(newItems) {
-    if (newItems.length === 0) {
+    // Filtrira stavke sa score < 1 (obrisane poruke koje su smanjile trending)
+    const filteredItems = newItems.filter(item => item.score >= 1);
+    
+    if (filteredItems.length === 0) {
         // Ako nema stavki, prikaži praznu listu
         if (trendingList.innerHTML !== `<p class="loading">${MESSAGES.NO_TRENDING}</p>`) {
             trendingList.innerHTML = `<p class="loading">${MESSAGES.NO_TRENDING}</p>`;
@@ -154,7 +149,7 @@ function renderTrendingQuietly(newItems) {
     }
 
     // Kreiraj novi HTML
-    const newHTML = newItems.map((item, index) => `
+    const newHTML = filteredItems.map((item, index) => `
         <div class="trending-item">
             <div class="trending-rank">#${index + 1}</div>
             <div class="trending-hashtag">${escapeHtml(item.hashtag)}</div>

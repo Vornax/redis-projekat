@@ -44,7 +44,9 @@ namespace TrendingApi.Controllers
             string postKey = $"post:{postIdNumber}";
 
             // Izvlačimo sve hashtagove iz teksta (npr. #programiranje)
+            // Regex gleda za # praćeno sa jednom ili više word karaktera (slova, brojeva, _)
             var hashtags = Regex.Matches(request.Text, @"#(\w+)", RegexOptions.IgnoreCase)
+                            .Cast<Match>()
                             .Select(m => "#" + m.Groups[1].Value.ToLowerInvariant())
                             .Distinct()
                             .ToList();
@@ -228,7 +230,7 @@ namespace TrendingApi.Controllers
                 return Forbid();
 
             // Soft delete - označi poruku kao obrisanu
-            await db.HashSetAsync(postKey, "deleted", true);
+            await db.HashSetAsync(postKey, "deleted", "true");
 
             // poruka više "ne postoji", moramo da poništimo njen uticaj na trending hashtagove
             var textEntry = postHash.FirstOrDefault(h => h.Name == "text");

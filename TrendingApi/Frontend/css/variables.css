@@ -4,16 +4,15 @@
 
 :root {
     /* Boje - WhatsApp stil */
-    --primary-color: #128C7E;      /* Tamnozelen - header/glavne dugme */
-    --secondary-color: #075E54;    /* Tamnjizelen - footer/akcenti */
-    --success-color: #25D366;      /* Svetlozelen - uspešne akcije */
+    --primary-color: #128C7E;     
+    --secondary-color: #075E54; 
+    --success-color: #25D366;    
     --danger-color: #f56565;
     --warning-color: #ed8936;
-    --light-bg: #f0f0f0;           /* Svetlosiva pozadina */
+    --light-bg: #f0f0f0;         
     --dark-text: #1a202c;
     --border-color: #e2e8f0;
     
-    /* Shadow */
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 8px 20px rgba(18, 140, 126, 0.3);
@@ -52,7 +51,6 @@
     --z-sticky: 1000;
 }
 
-/* Global Reset */
 * {
     margin: 0;
     padding: 0;
@@ -73,7 +71,6 @@ body {
     padding: 0 var(--spacing-xl);
 }
 
-/* Utility Classes */
 .text-center {
     text-align: center;
 }

@@ -1,4 +1,5 @@
 using TrendingApi.Services;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -9,10 +10,31 @@ builder.Services.AddSingleton<RedisService>();
 builder.Services.AddSingleton<RateLimiterService>();
 builder.Services.AddSingleton<UserService>();
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.ApiKey,
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Description = "Enter the API key value (no 'Bearer ' prefix)."
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "ApiKey" },
+                In = ParameterLocation.Header,
+                Name = "Authorization"
+            },
+            new string[] { }
+        }
+    });
+});
 builder.Services.AddControllers(); 
 builder.Services.AddAuthorization();
 
@@ -34,11 +56,9 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Serviruj static files iz Frontend foldera
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -51,7 +71,6 @@ app.UseMiddleware<TrendingApi.Middleware.AuthorizationMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 
-// Fallback na index.html za SPA
 app.MapFallbackToFile("index.html");
 
 app.Run();

@@ -45,7 +45,6 @@
     }
 }
 
-/* Smooth transitions za sve interactive elemente */
 textarea,
 input,
 select,
@@ -53,7 +52,6 @@ select,
     transition: all var(--transition-fast);
 }
 
-/* Toast notifications (ako se dodaju kasnije) */
 .toast {
     position: fixed;
     bottom: var(--spacing-xl);
