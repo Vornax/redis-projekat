@@ -3,23 +3,25 @@ using System;
 
 namespace TrendingApi.Services
 {
-    public class RedisService : IDisposable
+    public class RedisService : IDisposable // IDisposable da bi se konekcioni pool zatvorio na kraju
     {
-        private readonly IConnectionMultiplexer _redis;
+        private readonly IConnectionMultiplexer _redis; // konekcioni pool
         public IConnectionMultiplexer Connection => _redis;
         public IDatabase Database { get; }
 
         public RedisService(IConfiguration configuration)
         {
+            // citamo iz konfiguracije
             var redisConnectionString = configuration.GetConnectionString("Redis") ?? "redis:6379";
             var redisPassword = configuration["REDIS_PASSWORD"];
 
+            // Pretvara tekstualni connection stringu u objekat koji .NET razume
             var options = ConfigurationOptions.Parse(redisConnectionString);
             if (!string.IsNullOrEmpty(redisPassword))
             {
                 options.Password = redisPassword;
             }
-            options.AbortOnConnectFail = false;
+            options.AbortOnConnectFail = false; // ne prekidaj aplikaciju odmah, već pokušaj ponovo
 
             const int maxAttempts = 8;
             var delay = TimeSpan.FromSeconds(1);
@@ -47,6 +49,7 @@ namespace TrendingApi.Services
             }
         }
 
+        //  se konekcioni pool zatvori na kraju
         public void Dispose()
         {
             _redis?.Dispose();

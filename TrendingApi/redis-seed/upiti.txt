@@ -1,32 +1,32 @@
-# Dodavanje korisnika
+#Dodavanje korisnika
 HSET user:pera username "pera" role "user"
 HSET user:admin_marko username "admin" role "admin"
 HSET user:ana username "ana" role "user"
 
-# Dodavanje u set registrovanih korisnika
+#Dodavanje u set registrovanih korisnika
 SADD users "pera" "admin""ana"
 
-# Dodavanje trending hashtags (za današnji dan, npr. koristi trenutni datum ili fiksni za primer)
-# Pretpostavimo datum 2024-05-21 za primer
-ZADD trending:2026-01-31 5 "#motivacioniquote" 
-ZADD trending:2026-01-31 6 "#chillmode" 
-ZADD trending:2026-01-31 7 "#projekat" 
-ZADD trending:2026-01-31 8 "#jutarnjakafa" 
-ZADD trending:2026-01-31 9 "#dotnetdev" 
-ZADD trending:2026-01-31 10 "#dnevnitips" 
-ZADD trending:2026-01-31 11 "#tipsandtricks" 
-ZADD trending:2026-01-31 12 "#dockerlove" 
-ZADD trending:2026-01-31 13 "#pozdravsvima" 
-ZADD trending:2026-01-31 14 "#programiranjedanas"
+#Dodavanje trending hashtags (za današnji dan, npr. koristi trenutni datum ili fiksni za primer)
+#Pretpostavimo datum 2024-05-21 za primer
+ZADD trending:2026-04-19 5 "#motivacioniquote" 
+ZADD trending:2026-04-19 6 "#chillmode" 
+ZADD trending:2026-04-19 7 "#projekat" 
+ZADD trending:2026-04-19 8 "#jutarnjakafa" 
+ZADD trending:2026-04-19 9 "#dotnetdev" 
+ZADD trending:2026-04-19 10 "#dnevnitips" 
+ZADD trending:2026-04-19 11 "#tipsandtricks" 
+ZADD trending:2026-04-19 12 "#dockerlove" 
+ZADD trending:2026-04-19 13 "#pozdravsvima" 
+ZADD trending:2026-04-19 14 "#programiranjedanas"
 
-# Dodaj i za prethodni dan da bi mogao da testiraš ZUNIONSTORE
-ZADD trending:2026-02-01 3 "#docker"
-ZADD trending:2026-02-01 5 "#chill"
-ZADD trending:2026-02-01 6 "#pozdrav"
-ZADD trending:2026-02-01 7 "#dobrodosli"
-ZADD trending:2026-02-01 8 "#kafa"
-ZADD trending:2026-02-01 9 "#motivacija"
-ZADD trending:2026-02-01 10 "#korakpokorak"
-ZADD trending:2026-02-01 11 "#programiranje"
-ZADD trending:2026-02-01 12 "#dnevnatema"
-ZADD trending:2026-02-01 15 "#dotnet"
+#Dodaj i za prethodni dan da bi mogao da testiraš ZUNIONSTORE
+ZADD trending:2026-04-20 3 "#docker"
+ZADD trending:2026-04-20 5 "#chill"
+ZADD trending:2026-04-20 6 "#pozdrav"
+ZADD trending:2026-04-20 7 "#dobrodosli"
+ZADD trending:2026-04-20 8 "#kafa"
+ZADD trending:2026-04-20 9 "#motivacija"
+ZADD trending:2026-04-20 10 "#korakpokorak"
+ZADD trending:2026-04-20 11 "#programiranje"
+ZADD trending:2026-04-20 12 "#dnevnatema"
+ZADD trending:2026-04-20 15 "#dotnet"

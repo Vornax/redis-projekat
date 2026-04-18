@@ -1,11 +1,19 @@
 using TrendingApi.Services;
 using Microsoft.OpenApi.Models;
 
+
+// ------------
+// Faza 1: Inicjalizacja i konfiguracja aplikacji
+//-------------
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     WebRootPath = Path.Combine(AppContext.BaseDirectory, "Frontend")
 });
 
+
+// ------------
+// Faza 2: Rejestracja servisa
+//-------------
 builder.Services.AddSingleton<RedisService>();
 builder.Services.AddSingleton<RateLimiterService>();
 builder.Services.AddSingleton<UserService>();
@@ -54,8 +62,14 @@ builder.Services.AddCors(options =>
     });
 });
 
+// ------------
+// Faza 3: prawienie aplikacji
+//-------------
 var app = builder.Build();
 
+// ------------
+// Faza 4: Konfiguracja middleware i pravila puta
+//-------------
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
@@ -73,6 +87,9 @@ app.MapControllers();
 
 app.MapFallbackToFile("index.html");
 
+// ------------
+// Faza 5: pokretanje aplikacije 
+//-------------
 app.Run();
 
 

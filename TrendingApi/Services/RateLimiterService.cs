@@ -4,7 +4,7 @@ namespace TrendingApi.Services
 {
     public class RateLimiterService
     {
-        private readonly IDatabase _db;
+        private readonly IDatabase _db; // Redis baza za čuvanje broja zahteva po korisniku
         private const int MaxRequestsPerMinute = 3;
         private const int WindowSeconds = 60;
 
@@ -20,12 +20,13 @@ namespace TrendingApi.Services
 
             var key = $"limiter:user:{username.ToLowerInvariant()}";
 
-            // Koristimo transakciju da izbegnemo race conditions
+            // da bi se osiguralo da niko drugi ne promeni vrednost dok se čita
             var tran = _db.CreateTransaction();
 
             var current = tran.StringGetAsync(key);
             tran.Execute(); // sinhrono izvrši da dobijemo vrednost
 
+            // Ako je rezultat null, tretira se kao 0, ako postoji koristi se ta vrednost
             long count = current.Result.IsNull ? 0 : (long)current.Result;
 
             if (count >= MaxRequestsPerMinute)
@@ -35,10 +36,10 @@ namespace TrendingApi.Services
 
             // Povećaj i postavi expire samo ako je ovo prva u prozoru
             tran = _db.CreateTransaction();
-            tran.StringIncrementAsync(key);
+            tran.StringIncrementAsync(key); // povećava broj zahteva za 1
             if (count == 0)
             {
-                tran.KeyExpireAsync(key, TimeSpan.FromSeconds(WindowSeconds));
+                tran.KeyExpireAsync(key, TimeSpan.FromSeconds(WindowSeconds)); // postavlja expire samo ako je ovo prvi zahtev u prozoru
             }
             tran.Execute();
 

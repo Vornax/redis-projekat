@@ -27,10 +27,12 @@ public class UserService
     public async Task<User?> GetUserAsync(string username)
     {
         string key = $"user:{username.ToLowerInvariant()}";
+        // Dohvati sve podatke o tom korisniku
         var hash = await _db.HashGetAllAsync(key);
 
         if (hash.Length == 0) return null;
 
+        // iz tih podataka o korisniku izvuci polje "username" i "role"
         var usernameEntry = hash.FirstOrDefault(h => h.Name == "username");
         var roleEntry    = hash.FirstOrDefault(h => h.Name == "role");
 
@@ -46,9 +48,10 @@ public class UserService
     public async Task<List<User>> GetAllUsersAsync()
     {
         var users = new List<User>();
+        // da bi dobili spisak svih ključeva, mora da se "popne" na nivo servera i da se koristi metoda Keys
         var server = _redis.Connection.GetServer(_redis.Connection.GetEndPoints().FirstOrDefault());
         
-        // Pronađi sve user: keys
+        // Pronađi sve ključeve koji počinju sa "user:"
         var keys = server.Keys(pattern: "user:*");
         
         foreach (var key in keys)
